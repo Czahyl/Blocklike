@@ -3,6 +3,7 @@ import java.awt.Rectangle;
 ArrayList<PImage> textureList = new ArrayList<PImage>();
 PFont mainFont;
 
+
 Menu currentMenu;
 Menu title;
 
@@ -12,7 +13,7 @@ void setup()
 {
   size(350, 350);
 
-  textureList.add(loadImage("menu_bg.png"));
+  textureList.add(loadImage("menu_bg.png")); 
   textureList.add(loadImage("player.png"));
 
   title = new Menu(7, 7);
@@ -46,12 +47,18 @@ void keyPressed()
   {
     if (keyCode == UP)
       game.player.velocity.y = -2;
-   if (keyCode == DOWN)
+    if (keyCode == DOWN)
       game.player.velocity.y = 2;
     if (keyCode == LEFT)
+    {
+      game.player.facingLeft = true;
       game.player.velocity.x = -2;
+    }
     if (keyCode == RIGHT)
+    {
+      game.player.facingLeft = false;
       game.player.velocity.x = 2;
+    }
   }
 }
 
@@ -71,6 +78,7 @@ void keyReleased()
 void draw() 
 {
   background(0);
+  translate(0, 0);
   noStroke();
   rotate(0);
 
