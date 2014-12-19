@@ -1,5 +1,3 @@
-import java.awt.Rectangle;
-
 ArrayList<PImage> textureList = new ArrayList<PImage>();
 PFont mainFont;
 

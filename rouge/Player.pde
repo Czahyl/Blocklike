@@ -41,6 +41,11 @@ class Player
     
     drawSword(facingLeft);
   }
+  
+  Rectangle getBounds()
+  {
+     return new Rectangle((int)position.x, (int)position.y, sprite.width, sprite.height);
+  }
 
   private void drawSword(boolean left)
   {
@@ -56,10 +61,10 @@ class Player
       rect(position.x + sprite.width / 2 + 14, position.y + sprite.height/2, 10, 3);
     } else
     {
-      rect(position.x + sprite.width/2 - 8, position.y + sprite.height/2, 5, 3);
-      rect(position.x + sprite.width / 2 - 11, position.y + sprite.height/2-1, 3, 5);
+      rect(position.x + sprite.width/2 - 11, position.y + sprite.height/2, 5, 3);
+      rect(position.x + sprite.width / 2 - 14, position.y + sprite.height/2-1, 3, 5);
       fill(255);
-      rect(position.x + sprite.width / 2 - 21, position.y + sprite.height/2, 10, 3);
+      rect(position.x + sprite.width / 2 - 24, position.y + sprite.height/2, 10, 3);
     }
   }
 }
