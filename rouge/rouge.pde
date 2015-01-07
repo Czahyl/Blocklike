@@ -44,32 +44,30 @@ void keyPressed()
   } else
   {
     if (keyCode == UP)
-      game.player.velocity.y = -2;
+      game.moveKeys[0] = true;
     if (keyCode == DOWN)
-      game.player.velocity.y = 2;
+      game.moveKeys[1] = true;
     if (keyCode == LEFT)
-    {
-      game.player.facingLeft = true;
-      game.player.velocity.x = -2;
-    }
+      game.moveKeys[2] = true;
     if (keyCode == RIGHT)
-    {
-      game.player.facingLeft = false;
-      game.player.velocity.x = 2;
-    }
+      game.moveKeys[3] = true;
   }
 }
 
 void keyReleased() 
 {
-   if (!title.closed)
+  if (!title.closed)
   {
   } else
   {
-    if (keyCode == UP || keyCode == DOWN)
-      game.player.velocity.y = 0;
-    if(keyCode == LEFT || keyCode == RIGHT)
-      game.player.velocity.x = 0;
+    if (keyCode == UP)
+      game.moveKeys[0] = false;
+    if (keyCode == DOWN)
+      game.moveKeys[1] = false;
+    if (keyCode == LEFT)
+      game.moveKeys[2] = false;
+    if (keyCode == RIGHT)
+      game.moveKeys[3] = false;
   }
 }
 

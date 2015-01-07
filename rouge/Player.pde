@@ -1,26 +1,25 @@
-class Player
+class Player extends Entity
 {
   PImage sprite;
-  PVector position, velocity;
   boolean facingLeft = true;
   boolean attackLeft = false;
 
   Player(PVector position)
   {
+    super(position, new PVector(0, 0), textureList.get(1).width, textureList.get(1).height);
+    
     sprite = textureList.get(1);
     this.position = position;
     velocity = new PVector(0, 0);
   }
 
   void update()
-  {
-    position.x += velocity.x;
-    position.y += velocity.y;
+  { 
+    super.update();
   }
 
   void render()
   {
-    
     noStroke();
     fill(0);
     
