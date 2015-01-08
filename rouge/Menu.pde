@@ -1,93 +1,57 @@
-class GUIText
+abstract class Menu
 {
-  String text;
-  PFont font;
-  int size;
-  PVector position;
-  color clr;
-
-  GUIText(String text, PFont font, int size, PVector position, color clr)
-  {
-    this.text = text;
-    this.font = font;
-    this.size = size;
-    this.position = position;
-    this.clr = clr;
-  }
+  public abstract void init(PApplet parent);
+  public abstract void draw();
+  public abstract void keyPressed(int keyCode);
+  public abstract boolean doesPause();
 }
 
-class Menu
+public final class MainMenu extends Menu
 {
-  private ArrayList<PImage> renderables = new ArrayList<PImage>();
-  private ArrayList<PVector> renderPos = new ArrayList<PVector>();
-  private ArrayList<GUIText> guiText = new ArrayList<GUIText>();
+  private int index = 0;
+  private String[] selections = { "Play", "Options", "Quit"  };
+  private PApplet parent;
 
-  ArrayList<String> selections = new ArrayList<String>();
-  PVector selectPosition;
-  int selection = 0;
-
-  PImage bg;
-
-  private int wX, hY;
-  boolean closed = false;
-
-  Menu(int wX, int hY)
+  public void init(PApplet parent)
   {
-    this.wX = wX;
-    this.hY = hY;
-
-    bg = textureList.get(0);
+    this.parent = parent;
   }
-  
-  void keyPressed() 
-{
-  if (key == CODED)
+
+  public void draw()
   {
-    if (keyCode == UP)
-      currentMenu.selection--;
-    else if (keyCode == DOWN)
-      currentMenu.selection++;
-  }
-}
+    textSize(32);
+    text("Blocklike", 75, 25);
 
-  void show()
-  {
-    if(closed) return;
-    
-    image(bg, 0, 0);
+    if(this.index > selections.length-1 || this.index < 0)
+        this.index = 0;
 
-    if (selection < 0)
-      selection = selections.size()-1;
-    else if (selection > selections.size()-1)
-      selection = 0;
-
-    for (int i = 0; i < selections.size (); i++)
+    for(int i = 0; i < selections.length; i++)
     {
-      if (selection == i)
+      if(i == this.index)
         fill(125);
       else
         fill(50);
 
-      textFont(mainFont, 32);
       textAlign(CENTER);
-      text(selections.get(i), selectPosition.x, selectPosition.y + (32 * i));
-    }
-
-    for (int i = 0; i < guiText.size (); i++)
-    {
-      GUIText text = guiText.get(i);
-
-      textFont(text.font, text.size);
-      textAlign(CENTER);
-      fill(text.clr);
-      text(text.text, text.position.x, text.position.y);
+      text(selections[i], width / 2, (height / 2) + (32 * i));
     }
   }
 
-  void addRenderable(PImage img, PVector pos)
+  public void keyPressed(int keyCode)
   {
-    renderables.add(img);
-    renderPos.add(pos);
+    if(keyCode == UP)
+      index--;
+    if(keyCode == DOWN)
+      index++;
+  }
+
+  public void itemSelected()
+  {
+  }
+
+  public boolean doesPause()
+  {
+    return true;
   }
 }
 

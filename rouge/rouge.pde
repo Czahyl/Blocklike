@@ -1,9 +1,7 @@
 ArrayList<PImage> textureList = new ArrayList<PImage>();
 PFont mainFont;
 
-
 Menu currentMenu;
-Menu title;
 
 Game game;
 
@@ -14,34 +12,20 @@ void setup()
   textureList.add(loadImage("menu_bg.png")); 
   textureList.add(loadImage("player.png"));
 
-  title = new Menu(7, 7);
-  mainFont = loadFont("8BITWONDERNominal.vlw");
-
-  title.selectPosition = new PVector(width/2, height/2);
-  title.selections.add("Play");
-  title.selections.add("Options");
-  title.selections.add("Quit");
-  title.guiText.add(new GUIText("BITLIKE", mainFont, 42, new PVector(width/2, 100), color(100, 100, 100)));
-
-  currentMenu = title;
+  mainFont = createFont("8-BIT WONDER", 32);
 
   game = new Game();
+
+  showMenu(new MainMenu());
 }
 
 void keyPressed() 
 {
-  if (!title.closed)
+  if (currentMenu != null)
   {
-    if (keyCode == UP)
-      currentMenu.selection--;
-    else if (keyCode == DOWN)
-      currentMenu.selection++;
-
-    if (key == 'x' && currentMenu.selection == 0)
-    {
-      currentMenu.closed = true;
-    }
-  } else
+    currentMenu.keyPressed(keyCode);
+  }
+  else
   {
     if (keyCode == UP)
       game.moveKeys[0] = true;
@@ -56,9 +40,7 @@ void keyPressed()
 
 void keyReleased() 
 {
-  if (!title.closed)
-  {
-  } else
+  if(currentMenu == null)
   {
     if (keyCode == UP)
       game.moveKeys[0] = false;
@@ -73,16 +55,32 @@ void keyReleased()
 
 void draw() 
 {
+
+  boolean skip = false;
+
   background(0);
   translate(0, 0);
   noStroke();
   rotate(0);
 
-  currentMenu.show();
+  if(currentMenu != null)
+  {
+    currentMenu.draw();
 
-  if (!title.closed) return;
+    skip = currentMenu.doesPause();
+  }
 
-  game.update();
-  game.render();
+  if(!skip)
+  {
+    game.update();
+    game.render();
+  }
 }
 
+
+void showMenu(Menu menu)
+{
+    currentMenu = menu;
+    if(currentMenu != null)
+      currentMenu.init(this);
+}
